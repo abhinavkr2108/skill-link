@@ -32,15 +32,14 @@ export async function postCourseTitle(req: Request, res: Response) {
   }
 }
 
-export async function updateCourseTitle(req: Request, res: Response) {
+export async function updateCourseData(req: Request, res: Response) {
   try {
-    const values: CourseTitleProps = await req.body;
+    const values = await req.body;
     const { data, userId } = values;
-    const title = data.title;
     const { courseId } = req.params;
 
-    if (!title) {
-      return res.status(500).json("Cannot Find Title");
+    if (!data) {
+      return res.status(500).json("Cannot Find Data");
     }
     if (!userId || userId === undefined) {
       return res.status(500).json("Cannot Find UserID");

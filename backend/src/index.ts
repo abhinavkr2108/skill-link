@@ -4,6 +4,9 @@ import { authRoute } from "./routes/authRoute";
 import { apiRoute } from "./routes/apiRoute";
 import cors from "cors";
 import { courseRoute } from "./routes/getCourseRoute";
+import { createRouteHandler } from "uploadthing/express";
+
+import { uploadRouter } from "./uploadthing";
 
 const app: Express = express();
 const router: Router = Router();
@@ -15,6 +18,17 @@ app.use(
     origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
+  })
+);
+
+app.use(
+  "/api/uploadthing",
+  createRouteHandler({
+    router: uploadRouter,
+    config: {
+      uploadthingId: process.env.UPLOADTHING_APP_ID,
+      uploadthingSecret: process.env.UPLOADTHING_SECRET,
+    },
   })
 );
 

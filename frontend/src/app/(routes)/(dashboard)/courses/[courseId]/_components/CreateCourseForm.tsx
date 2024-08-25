@@ -3,6 +3,8 @@ import React from "react";
 import ErrorPage from "./ErrorPage";
 import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import TitleForm from "./TitleForm";
+import DescriptionForm from "./DescriptionForm";
+import ImageForm from "./ImageForm";
 
 interface CreateCourseFormProps {
   course: Course;
@@ -43,6 +45,8 @@ export default function CreateCourseForm({ course }: CreateCourseFormProps) {
           </Box>
           <Box>
             <TitleForm initialData={course} />
+            <DescriptionForm initialData={course} />
+            <ImageForm initialData={course} />
           </Box>
         </Box>
       </SimpleGrid>
