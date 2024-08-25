@@ -26,6 +26,7 @@ import { Pencil } from "lucide-react";
 import axios from "axios";
 import { backendUrl } from "@/constants";
 import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 interface TitleFormProps {
   initialData: Course;
@@ -43,6 +44,7 @@ export default function TitleForm({ initialData }: TitleFormProps) {
   // Hooks
   const toast = useToast();
   const router = useRouter();
+  const { user } = useUser();
 
   // Form
   const form = useForm<z.infer<typeof formSchema>>({
@@ -57,10 +59,14 @@ export default function TitleForm({ initialData }: TitleFormProps) {
 
   // Functions
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    const values = {
+      data: data,
+      userId: user?.id,
+    };
     try {
       const response = await axios.patch(
-        `${backendUrl}/courses/${courseId}`,
-        data
+        `${backendUrl}/api/courses/${courseId}`,
+        values
       );
       toast({
         title: "Title updated",
