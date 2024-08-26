@@ -28,7 +28,7 @@ export default async function CourseIdPage({ params }: CourseIdPageProps) {
   }
   try {
     const response = await axios.get(`${backendUrl}/categories`);
-    const categories = response.data;
+    categories = response.data;
     console.log("categories", categories);
     console.log(categories);
   } catch (error) {
@@ -37,5 +37,12 @@ export default async function CourseIdPage({ params }: CourseIdPageProps) {
   if (!course || course === null) {
     return redirect("/");
   }
-  return <div>{course && <CreateCourseForm course={course} />}</div>;
+  if (categories === null) {
+    return <ErrorPage />;
+  }
+  return (
+    <div>
+      {course && <CreateCourseForm course={course} categories={categories} />}
+    </div>
+  );
 }

@@ -1,4 +1,4 @@
-import { Course } from "@/lib/types";
+import { Category, Course } from "@/lib/types";
 import React from "react";
 import ErrorPage from "./ErrorPage";
 import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
@@ -8,8 +8,12 @@ import ImageForm from "./ImageForm";
 
 interface CreateCourseFormProps {
   course: Course;
+  categories: Category[];
 }
-export default function CreateCourseForm({ course }: CreateCourseFormProps) {
+export default function CreateCourseForm({
+  course,
+  categories,
+}: CreateCourseFormProps) {
   const requiredFields = [
     course.title,
     course.description,
