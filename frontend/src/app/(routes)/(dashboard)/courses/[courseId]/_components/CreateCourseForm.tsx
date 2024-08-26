@@ -18,6 +18,8 @@ export default function CreateCourseForm({ course }: CreateCourseFormProps) {
     course.categoryId,
   ];
 
+  // const categories = await db
+
   const totalFields = requiredFields.length;
   const completedFields = requiredFields.filter(Boolean).length;
   const completionText = `${completedFields}/${totalFields}`;

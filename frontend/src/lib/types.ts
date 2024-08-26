@@ -10,3 +10,8 @@ export type Course = {
   createdAt: string; // Assuming ISO date string
   updatedAT: string; // Assuming ISO date string
 };
+
+export type Category = {
+  id: string;
+  name: string;
+};
