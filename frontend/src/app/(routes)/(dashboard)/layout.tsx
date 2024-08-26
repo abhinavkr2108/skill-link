@@ -35,9 +35,8 @@ export default function DashboardLayout({
         <Box
           ml={{ base: 0, md: 56, lg: 64 }}
           overflowY="auto"
-          className="flex-grow h-full"
+          className="flex-grow h-full mt-16"
           flexGrow={{ md: 1 }}
-          pt={20}
           pl={8}
         >
           {children}

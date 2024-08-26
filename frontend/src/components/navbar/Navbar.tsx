@@ -16,7 +16,7 @@ export default function Navbar() {
   }, [user.isLoaded]);
 
   return (
-    <Box className="border-b shadow-sm z-50 flex items-center justify-between h-14 px-5">
+    <Box className="border-b shadow-sm flex items-center justify-between h-14 px-5">
       <Box className="flex gap-2 items-center">
         <Box display={{ base: "block", md: "none" }}>
           <NavigationDrawer />

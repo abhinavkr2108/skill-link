@@ -12,6 +12,13 @@ export async function getCourseDetailsById(req: Request, res: Response) {
     where: {
       id: courseId,
     },
+    include: {
+      attachments: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
   });
 
   if (!course) {
