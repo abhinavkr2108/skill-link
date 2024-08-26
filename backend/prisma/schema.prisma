@@ -59,7 +59,7 @@ model Chapter {
   id           String         @id @default(uuid()) @map("_id")
   title        String
   description  String?
-  video        String
+  video        String?
   position     Int
   isPublished  Boolean        @default(false)
   muxData      MuxData?
@@ -70,7 +70,7 @@ model Chapter {
   updatedAt    DateTime       @default(now())
   Attachment   Attachment?    @relation(fields: [attachmentId], references: [id])
   attachmentId String?
-  muxDataId    String
+  muxDataId    String?
 }
 
 model MuxData {

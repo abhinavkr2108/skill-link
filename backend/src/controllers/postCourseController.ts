@@ -132,3 +132,52 @@ export async function removeAttachment(req: Request, res: Response) {
     return res.status(500).json(error);
   }
 }
+
+export async function addChapterTitle(req: Request, res: Response) {
+  try {
+    const { data, userId } = req.body;
+    const { courseId } = req.params;
+    const title = data.title;
+
+    if (!userId) {
+      return res.status(500).json("Cannot Find UserID");
+    }
+    if (!courseId) {
+      return res.status(500).json("Cannot Find CourseID");
+    }
+
+    const courseOwner = await db.course.findUnique({
+      where: {
+        id: courseId,
+        userId: userId,
+      },
+    });
+
+    if (!courseOwner) {
+      return res.status(500).json("Cannot Find Course: Unauthorized");
+    }
+
+    const lastChapter = await db.chapter.findFirst({
+      where: {
+        courseID: courseId,
+      },
+      orderBy: {
+        position: "desc",
+      },
+    });
+
+    const newPosition = lastChapter ? lastChapter.position + 1 : 1;
+
+    const chapter = await db.chapter.create({
+      data: {
+        title: title,
+        position: newPosition,
+        courseID: courseId,
+      },
+    });
+
+    return res.status(200).json(chapter);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+}

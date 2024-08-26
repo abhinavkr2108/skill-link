@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   addAttachments,
+  addChapterTitle,
   postCourseTitle,
   removeAttachment,
   updateCourseData,
@@ -15,3 +16,4 @@ apiRoute.delete(
   "/courses/:courseId/attachments/:attachmentId",
   removeAttachment
 );
+apiRoute.post("/courses/:courseId/chapters", addChapterTitle);
