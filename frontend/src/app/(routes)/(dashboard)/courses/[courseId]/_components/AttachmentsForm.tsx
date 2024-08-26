@@ -94,7 +94,14 @@ export default function AttachmentsForm({ initialData }: AttachmentsProps) {
   const deleteAttachment = async (id: string) => {
     try {
       setDeleteId(id);
-      await axios.delete(`${backendUrl}/api/attachments/${id}`);
+      await axios.delete(
+        `${backendUrl}/api/courses/${courseId}/attachments/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user?.id}`,
+          },
+        }
+      );
       toast({
         title: "Removed attachment successfully",
         status: "success",
@@ -156,6 +163,8 @@ export default function AttachmentsForm({ initialData }: AttachmentsProps) {
                         aria-label="remove-attachment"
                         variant={"ghost"}
                         icon={<Trash />}
+                        color={"red"}
+                        onClick={() => deleteAttachment(attachment.id)}
                       />
                     </div>
                   )}

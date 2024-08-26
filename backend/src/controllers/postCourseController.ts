@@ -95,3 +95,40 @@ export async function addAttachments(req: Request, res: Response) {
     return res.status(500).json(error);
   }
 }
+
+export async function removeAttachment(req: Request, res: Response) {
+  try {
+    const { attachmentId } = req.params;
+    const { courseId } = req.params;
+    const userId = req.headers.authorization?.split(" ")[1];
+
+    if (!attachmentId) {
+      return res.status(500).json("Attachment not found");
+    }
+    if (!courseId) {
+      return res.status(500).json("Course not found");
+    }
+
+    const courseOwner = await db.course.findUnique({
+      where: {
+        id: courseId,
+        userId: userId,
+      },
+    });
+
+    if (!courseOwner) {
+      return res.status(500).json("Cannot remove Attachment: Unauthorized");
+    }
+
+    const attachment = await db.attachment.delete({
+      where: {
+        id: attachmentId,
+        courseId: courseId,
+      },
+    });
+
+    return res.status(200).json(attachment);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+}
