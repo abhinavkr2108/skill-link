@@ -25,21 +25,23 @@ model Course {
   attachments Attachment[]
   category    Category?    @relation(fields: [categoryId], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAT DateTime @default(now())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  chapters  Chapter[]
 
   @@index([categoryId])
   @@map("courses")
 }
 
 model Attachment {
-  id        String   @id @default(uuid()) @map("_id")
+  id        String    @id @default(uuid()) @map("_id")
   name      String
   url       String
   courseId  String?
-  course    Course?  @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAT DateTime @default(now())
+  course    Course?   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  chapters  Chapter[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
 
   @@index([courseId])
   @@map("attachments")
@@ -51,4 +53,43 @@ model Category {
   courses Course[]
 
   @@map("category")
+}
+
+model Chapter {
+  id           String         @id @default(uuid()) @map("_id")
+  title        String
+  description  String?
+  video        String
+  position     Int
+  isPublished  Boolean        @default(false)
+  muxData      MuxData?
+  courseID     String
+  course       Course         @relation(fields: [courseID], references: [id], onDelete: Cascade)
+  userProgress UserProgress[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now())
+  Attachment   Attachment?    @relation(fields: [attachmentId], references: [id])
+  attachmentId String?
+  muxDataId    String
+}
+
+model MuxData {
+  id         String  @id @default(uuid()) @map("_id")
+  chapterId  String  @unique
+  assetId    String
+  playbackId String
+  chapter    Chapter @relation(fields: [chapterId], references: [id])
+}
+
+model UserProgress {
+  id          String   @id @default(uuid()) @map("_id")
+  userId      String
+  chapterId   String
+  chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+
+  @@unique([userId, chapterId])
+  @@index([chapterId])
 }

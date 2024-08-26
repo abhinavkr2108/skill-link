@@ -8,6 +8,7 @@ import ImageForm from "./ImageForm";
 import CategoryForm from "./CategoryForm";
 import { FileText, LayoutDashboard, ListChecks } from "lucide-react";
 import AttachmentsForm from "./AttachmentsForm";
+import ChaptersForm from "./ChaptersForm";
 
 interface CreateCourseFormProps {
   course: Course;
@@ -23,6 +24,7 @@ export default function CreateCourseForm({
     course.imageUrl,
     course.price,
     course.categoryId,
+    course.chapters.some((chapter) => chapter.isPublished),
   ];
 
   // const categories = await db
@@ -69,7 +71,9 @@ export default function CreateCourseForm({
               <ListChecks className="w-6 h-6 text-sky-400" />
               <Heading size={"md"}>Course Chapters</Heading>
             </Box>
-            // TODO: Add chapters
+            <Box>
+              <ChaptersForm initialData={course} />
+            </Box>
           </Box>
         </Box>
         <Box className="space-y-6">

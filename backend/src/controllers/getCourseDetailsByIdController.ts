@@ -13,6 +13,11 @@ export async function getCourseDetailsById(req: Request, res: Response) {
       id: courseId,
     },
     include: {
+      chapters: {
+        orderBy: {
+          position: "asc",
+        },
+      },
       attachments: {
         orderBy: {
           createdAt: "desc",

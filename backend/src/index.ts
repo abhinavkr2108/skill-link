@@ -1,6 +1,5 @@
 import express, { Express, Request, Response, Router } from "express";
 import { PORT } from "./secret";
-import { authRoute } from "./routes/authRoute";
 import { apiRoute } from "./routes/apiRoute";
 import cors from "cors";
 import { courseRoute } from "./routes/getCourseRoute";
@@ -33,11 +32,6 @@ app.use(
   })
 );
 
-// app.get("/", (req: Request, res: Response) => {
-//   res.send("Hello, World!");
-// });
-
-// app.use("/auth", authRoute);
 app.use("/api", apiRoute);
 app.use("/courses", courseRoute);
 app.use("/categories", categoryRoute);
